@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    {% if employee %}
+        <p>Welcome, {{ employee.name }} (Role: {{ employee.role }})</p>
+        {% if employee.role == 'Super User' or employee.role == 'Admin' %}
+            <p><a href="{% url 'employee_list' %}">Employee Directory</a></p>
+            <p><a href="{% url 'department_list' %}">Department Management</a></p>
+        {% endif %}
+    {% else %}
+        <p>Welcome! (No employee profile loaded)</p>
+    {% endif %}
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+</body>
+</html>

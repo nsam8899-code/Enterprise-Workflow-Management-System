@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employees</title>
+</head>
+<body>
+    <h1>Employees</h1>
+    <p><a href="{% url 'employee_create' %}">+ New Employee</a></p>
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+    
+    <form method="get">
+        <input type="text" name="search" value="{{ search_query }}" placeholder="Search name or ID...">
+        <select name="department">
+            <option value="">All Departments</option>
+            {% for dept in departments %}
+                <option value="{{ dept.id }}" {% if dept_filter == dept.id|stringformat:"s" %}selected{% endif %}>{{ dept.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Search/Filter</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th><a href="?sort=employee_id&desc={% if sort_by == 'employee_id' and desc_mode == 'false' %}true{% else %}false{% endif %}">Employee ID</a></th>
+                <th><a href="?sort=name&desc={% if sort_by == 'name' and desc_mode == 'false' %}true{% else %}false{% endif %}">Name</a></th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in page_obj %}
+            <tr>
+                <td>{{ emp.employee_id }}</td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.department.name }}</td>
+                <td>{{ emp.position }}</td>
+                <td>{{ emp.role }}</td>
+                <td>{{ emp.status }}</td>
+                <td>
+                    <a href="{% url 'employee_edit' emp.pk %}">Edit</a> | 
+                    <a href="{% url 'employee_delete' emp.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No employees found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </div>
+</body>
+</html>
