@@ -4,9 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db import models
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 from employees.decorators import menu_permission_required
 from employees.models import Department, Employee
-from employees.forms import DepartmentForm, EmployeeForm
+from employees.forms import DepartmentForm, EmployeeForm, MenuPermissionFormSet
 
 def access_denied(request):
     return render(request, 'employees/access_denied.html')
@@ -146,3 +147,19 @@ def employee_delete(request, pk):
         employee.delete()
         return redirect('employee_list')
     return render(request, 'employees/employee_confirm_delete.html', {'employee': employee})
+
+@login_required
+def menu_permissions_edit(request):
+    # Strictly check Super User role
+    if not hasattr(request, 'employee') or request.employee.role != 'Super User':
+        raise PermissionDenied
+        
+    if request.method == 'POST':
+        formset = MenuPermissionFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('dashboard')
+    else:
+        formset = MenuPermissionFormSet()
+        
+    return render(request, 'employees/menu_permissions_form.html', {'formset': formset})

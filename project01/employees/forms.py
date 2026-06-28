@@ -35,3 +35,14 @@ class EmployeeForm(forms.ModelForm):
 
         self.fields['user'].queryset = User.objects.exclude(id__in=linked_user_ids)
         self.fields['user'].required = True
+
+
+from django.forms import modelformset_factory
+from employees.models import MenuPermission
+
+MenuPermissionFormSet = modelformset_factory(
+    MenuPermission,
+    fields=('allow_admin', 'allow_manager', 'allow_employee'),
+    extra=0
+)
+

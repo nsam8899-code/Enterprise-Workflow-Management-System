@@ -1,0 +1,96 @@
+{% extends 'employees/base.html' %}
+
+{% block title %}Manage Menu Permissions | FlowCorp{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <h1>Manage Menu Permissions</h1>
+        <p class="page-subtitle">Configure authorization settings and menu visibility options across various user roles.</p>
+    </div>
+
+    <div class="card" style="max-width: 900px;">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ formset.management_form }}
+
+            {% if formset.non_form_errors %}
+                <div class="alert alert-danger">
+                    {% for error in formset.non_form_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <table style="margin-bottom: 24px;">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Menu Option</th>
+                        <th style="text-align: center; width: 15%;">Super User</th>
+                        <th style="text-align: center; width: 15%;">Admin</th>
+                        <th style="text-align: center; width: 15%;">Manager</th>
+                        <th style="text-align: center; width: 15%;">Employee</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset %}
+                        <tr>
+                            <td>
+                                {{ form.id }}
+                                <strong>{{ form.instance.display_name }}</strong>
+                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">
+                                    Code: <code>{{ form.instance.menu_name }}</code>
+                                </span>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <input type="checkbox" checked disabled style="width: 18px; height: 18px; accent-color: var(--accent); cursor: not-allowed;">
+                            </td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    {{ form.allow_admin }}
+                                </div>
+                                {% if form.allow_admin.errors %}
+                                    <p style="color: var(--error); font-size: 0.75rem; margin-top: 4px;">{{ form.allow_admin.errors.as_text }}</p>
+                                {% endif %}
+                            </td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    {{ form.allow_manager }}
+                                </div>
+                                {% if form.allow_manager.errors %}
+                                    <p style="color: var(--error); font-size: 0.75rem; margin-top: 4px;">{{ form.allow_manager.errors.as_text }}</p>
+                                {% endif %}
+                            </td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    {{ form.allow_employee }}
+                                </div>
+                                {% if form.allow_employee.errors %}
+                                    <p style="color: var(--error); font-size: 0.75rem; margin-top: 4px;">{{ form.allow_employee.errors.as_text }}</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 40px;">No menu permissions registered.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 20px;">
+                <button type="submit" class="btn btn-primary">Save Permissions</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Additional styling for formset checkboxes to look uniform and premium -->
+    <style>
+        table tbody input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}

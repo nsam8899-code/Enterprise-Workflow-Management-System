@@ -43,6 +43,9 @@
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <a href="{% url 'employee_list' %}" class="btn btn-primary" style="justify-content: center;">Go to Employee Directory</a>
                         <a href="{% url 'department_list' %}" class="btn btn-secondary" style="justify-content: center;">Manage Departments</a>
+                        {% if employee.role == 'Super User' %}
+                            <a href="{% url 'menu_permissions_edit' %}" class="btn btn-primary" style="justify-content: center; background-color: #6366f1; border-color: #4f46e5;">Manage Menu Permissions</a>
+                        {% endif %}
                     </div>
                 {% else %}
                     <div style="padding: 12px; border-radius: 6px; font-size: 0.85rem; border: 1px solid var(--border); background-color: var(--bg-primary);">
