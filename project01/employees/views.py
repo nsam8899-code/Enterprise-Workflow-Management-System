@@ -11,6 +11,10 @@ from employees.forms import DepartmentForm, EmployeeForm
 def access_denied(request):
     return render(request, 'employees/access_denied.html')
 
+def logout_user(request):
+    logout(request)
+    return redirect('login')
+
 @login_required
 def dashboard(request):
     employee = getattr(request, 'employee', None)

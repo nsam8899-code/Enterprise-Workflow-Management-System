@@ -4,7 +4,7 @@ from employees import views
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='employees/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', views.logout_user, name='logout'),
     path('access-denied/', views.access_denied, name='access_denied'),
     path('departments/', views.department_list, name='department_list'),
     path('departments/create/', views.department_create, name='department_create'),

@@ -49,3 +49,9 @@ class MiddlewareTestCase(TestCase):
         # Should redirect to login page because they are logged out
         self.assertEqual(response.status_code, 302)
         self.assertIn('/login/', response.url)
+
+    def test_get_logout_redirects_to_login(self):
+        self.client.login(username="profile_user", password="password")
+        response = self.client.get('/logout/')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/login/', response.url)
