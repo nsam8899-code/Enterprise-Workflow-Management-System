@@ -1,0 +1,110 @@
+<h2>Application Layout & Navigation Structure</h2>
+<p class="subtitle">Select the preferred layout style for the Enterprise Workflow Management System dashboard.</p>
+
+<div class="split section">
+  <!-- Option A: Sidebar Layout Mockup -->
+  <div class="mockup">
+    <div class="mockup-header">Option A: Sidebar Navigation (Standard Enterprise)</div>
+    <div class="mockup-body" style="padding: 0; display: flex; min-height: 250px; font-family: sans-serif; font-size: 13px;">
+      <!-- Sidebar -->
+      <div style="width: 140px; background: #1a1f2c; color: #a0aec0; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-weight: bold; color: white; margin-bottom: 12px; font-size: 14px; display: flex; align-items: center; gap: 6px;">
+          <span style="display:inline-block; width:10px; height:10px; background:#0071e3; border-radius:50%"></span>
+          FlowCorp
+        </div>
+        <div style="background: #2d3748; color: white; padding: 6px 10px; border-radius: 6px;">Dashboard</div>
+        <div style="padding: 6px 10px;">Employees</div>
+        <div style="padding: 6px 10px;">Leave Request</div>
+        <div style="padding: 6px 10px;">Workflows</div>
+        <div style="margin-top: auto; padding: 6px 10px; font-size: 11px;">User: John Doe</div>
+      </div>
+      <!-- Content Area -->
+      <div style="flex: 1; background: #f7fafc; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <!-- Topbar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
+          <div style="font-weight: 600; font-size: 15px; color: #2d3748;">Employee Directory</div>
+          <button style="background: #0071e3; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px;">+ New Employee</button>
+        </div>
+        <!-- Table -->
+        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; flex: 1;">
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <input type="text" placeholder="Search..." style="flex: 1; font-size: 11px; padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px;">
+            <select style="font-size: 11px; padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px;"><option>All Depts</option></select>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 11px;">
+            <thead>
+              <tr style="border-bottom: 1px solid #e2e8f0; color: #718096;"><th style="padding: 4px 0;">ID</th><th style="padding: 4px 0;">Name</th><th style="padding: 4px 0;">Role</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding: 6px 0;">EMP0001</td><td style="padding: 6px 0; font-weight: 500;">Somchai Dee</td><td style="padding: 6px 0;">Super User</td></tr>
+              <tr><td style="padding: 6px 0;">EMP0002</td><td style="padding: 6px 0; font-weight: 500;">Somsri Rak</td><td style="padding: 6px 0;">Manager</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Top Navigation Mockup -->
+  <div class="mockup">
+    <div class="mockup-header">Option B: Top Navigation (SaaS Web App)</div>
+    <div class="mockup-body" style="padding: 0; display: flex; flex-direction: column; min-height: 250px; font-family: sans-serif; font-size: 13px;">
+      <!-- Top Navbar -->
+      <div style="background: #1a1f2c; color: #a0aec0; padding: 0 16px; height: 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2d3748;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-weight: bold; color: white; font-size: 14px; display: flex; align-items: center; gap: 6px;">
+            <span style="display:inline-block; width:10px; height:10px; background:#0071e3; border-radius:50%"></span>
+            FlowCorp
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <span style="color: white; font-weight: 500;">Dashboard</span>
+            <span>Employees</span>
+            <span>Leave Requests</span>
+            <span>Workflows</span>
+          </div>
+        </div>
+        <div style="font-size: 11px;">John Doe</div>
+      </div>
+      <!-- Content Area -->
+      <div style="flex: 1; background: #f7fafc; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-weight: 600; font-size: 15px; color: #2d3748;">Employee Directory</div>
+          <button style="background: #0071e3; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px;">+ New Employee</button>
+        </div>
+        <!-- Table -->
+        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; flex: 1;">
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <input type="text" placeholder="Search..." style="flex: 1; font-size: 11px; padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px;">
+            <select style="font-size: 11px; padding: 4px; border: 1px solid #cbd5e0; border-radius: 4px;"><option>All Depts</option></select>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 11px;">
+            <thead>
+              <tr style="border-bottom: 1px solid #e2e8f0; color: #718096;"><th style="padding: 4px 0;">ID</th><th style="padding: 4px 0;">Name</th><th style="padding: 4px 0;">Role</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding: 6px 0;">EMP0001</td><td style="padding: 6px 0; font-weight: 500;">Somchai Dee</td><td style="padding: 6px 0;">Super User</td></tr>
+              <tr><td style="padding: 6px 0;">EMP0002</td><td style="padding: 6px 0; font-weight: 500;">Somsri Rak</td><td style="padding: 6px 0;">Manager</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Sidebar Navigation Layout</h3>
+      <p>Clean, structural sidebar on the left. Ideal for enterprise apps with multiple navigation nodes, settings, and tables.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Top Navigation Layout</h3>
+      <p>Horizontal header on top. Provides more horizontal space for wide tables, but scales less easily as new sections are added.</p>
+    </div>
+  </div>
+</div>

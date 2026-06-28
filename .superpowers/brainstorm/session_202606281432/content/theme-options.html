@@ -1,0 +1,69 @@
+<h2>Select Visual Theme & Branding</h2>
+<p class="subtitle">Choose the default color palette and look & feel for the dashboard interface.</p>
+
+<div class="split section">
+  <!-- Option A: Slate Tech Dark Mode -->
+  <div class="mockup" style="border-color: #334155;">
+    <div class="mockup-header" style="background: #1e293b; color: #94a3b8; border-color: #334155;">Option A: Slate Tech (Sleek Dark Mode)</div>
+    <div class="mockup-body" style="background: #0f172a; color: #e2e8f0; padding: 20px; min-height: 250px; font-family: sans-serif;">
+      <!-- Navigation Item Selected -->
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+        <div style="background: rgba(59, 130, 246, 0.15); border-left: 3px solid #3b82f6; color: #3b82f6; padding: 8px 12px; border-radius: 0 6px 6px 0; font-size: 13px; font-weight: 600; flex: 1;">
+          Employees
+        </div>
+      </div>
+      <!-- Card (Stats) -->
+      <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);">
+        <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px;">Total Employees</div>
+        <div style="font-size: 24px; font-weight: bold; color: white;">1,248</div>
+        <div style="font-size: 11px; color: #10b981; margin-top: 4px;">▲ +12% this month</div>
+      </div>
+      <!-- Button and Badge -->
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer;">Add Employee</button>
+        <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 8px; border-radius: 9999px; font-size: 10px; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.3);">Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Enterprise Indigo Light Mode -->
+  <div class="mockup" style="border-color: #e2e8f0;">
+    <div class="mockup-header" style="background: #f8fafc; color: #64748b; border-color: #e2e8f0;">Option B: Enterprise Indigo (Clean Light Mode)</div>
+    <div class="mockup-body" style="background: #ffffff; color: #334155; padding: 20px; min-height: 250px; font-family: sans-serif;">
+      <!-- Navigation Item Selected -->
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+        <div style="background: #eef2ff; border-left: 3px solid #4f46e5; color: #4f46e5; padding: 8px 12px; border-radius: 0 6px 6px 0; font-size: 13px; font-weight: 600; flex: 1;">
+          Employees
+        </div>
+      </div>
+      <!-- Card (Stats) -->
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);">
+        <div style="font-size: 11px; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Total Employees</div>
+        <div style="font-size: 24px; font-weight: bold; color: #1e293b;">1,248</div>
+        <div style="font-size: 11px; color: #059669; margin-top: 4px;">▲ +12% this month</div>
+      </div>
+      <!-- Button and Badge -->
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button style="background: #4f46e5; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer;">Add Employee</button>
+        <span style="background: #ecfdf5; color: #047857; padding: 4px 8px; border-radius: 9999px; font-size: 10px; font-weight: 600; border: 1px solid #d1fae5;">Active</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="slate_dark" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Slate Tech (Sleek Dark Mode)</h3>
+      <p>A high-end dark appearance using slate grays, glowing blue indicators, and bright accent elements. Excellent for reduced eye strain and a modern, technical aesthetic.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="indigo_light" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Enterprise Indigo (Clean Light Mode)</h3>
+      <p>A crisp, bright look with royal indigo brand colors, warm gray borders, and emerald badges. Offers high contrast, clean typography, and a classic corporate, trustworthy appearance.</p>
+    </div>
+  </div>
+</div>

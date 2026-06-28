@@ -1,0 +1,49 @@
+<h2>Manage Menu Permissions</h2>
+<p class="subtitle">Only Super Users can configure which roles are allowed to view and access sidebar navigation menus.</p>
+
+<div class="mockup section">
+  <div class="mockup-header">Menu Visibility Matrix</div>
+  <div class="mockup-body" style="padding: 24px; font-family: sans-serif; background: white; color: #334155;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+      <thead>
+        <tr style="border-bottom: 2px solid #e2e8f0; color: #475569; background: #f8fafc;">
+          <th style="padding: 12px 16px; font-weight: 600;">Navigation Menu</th>
+          <th style="padding: 12px 16px; text-align: center; font-weight: 600;">Super User</th>
+          <th style="padding: 12px 16px; text-align: center; font-weight: 600;">Admin</th>
+          <th style="padding: 12px 16px; text-align: center; font-weight: 600;">Manager</th>
+          <th style="padding: 12px 16px; text-align: center; font-weight: 600;">Employee</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #e2e8f0;">
+          <td style="padding: 14px 16px; font-weight: 600; color: #0f172a;">👥 Employee Directory</td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" checked disabled style="width: 16px; height: 16px;"></td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" checked style="width: 16px; height: 16px;"></td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" style="width: 16px; height: 16px;"></td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" style="width: 16px; height: 16px;"></td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e2e8f0;">
+          <td style="padding: 14px 16px; font-weight: 600; color: #0f172a;">🏢 Department Management</td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" checked disabled style="width: 16px; height: 16px;"></td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" checked style="width: 16px; height: 16px;"></td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" style="width: 16px; height: 16px;"></td>
+          <td style="padding: 14px 16px; text-align: center;"><input type="checkbox" style="width: 16px; height: 16px;"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
+      <button style="background: #4f46e5; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">Save Permissions</button>
+      <button style="background: white; border: 1px solid #d1d5db; color: #4b5563; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>Approve UI Matrix Design</h3>
+      <p>Configure dynamic visibility in a direct checkbox matrix for all roles, saved by the Super User.</p>
+    </div>
+  </div>
+</div>
