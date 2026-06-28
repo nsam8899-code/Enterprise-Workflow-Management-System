@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Enterprise Workflow System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'employees/css/style.css' %}">
+    <!-- Blocking script to initialize theme before rendering body -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <script>
+        // Apply theme to body immediately
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <div class="app-container">
+        <!-- Persistent Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon"></div>
+                <span class="sidebar-brand-name">FlowCorp</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="{% if request.resolver_match.view_name == 'dashboard' %}active{% endif %}">
+                    <a href="{% url 'dashboard' %}">
+                        <span class="icon">📊</span>
+                        <span class="label-text">Dashboard</span>
+                    </a>
+                </li>
+                {% if request.employee.role == 'Super User' or request.employee.role == 'Admin' %}
+                    <li class="{% if 'employee' in request.resolver_match.view_name %}active{% endif %}">
+                        <a href="{% url 'employee_list' %}">
+                            <span class="icon">👥</span>
+                            <span class="label-text">Employees</span>
+                        </a>
+                    </li>
+                    <li class="{% if 'department' in request.resolver_match.view_name %}active{% endif %}">
+                        <a href="{% url 'department_list' %}">
+                            <span class="icon">🏢</span>
+                            <span class="label-text">Departments</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-area">
+            <header class="main-header">
+                <div class="header-left">
+                    <button id="sidebar-toggle" class="icon-btn" title="Toggle Navigation">
+                        <!-- Menu SVG Icon -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div style="font-weight: 600; font-size: 0.95rem;">Workflow Hub</div>
+                </div>
+                <div class="header-right">
+                    <button id="theme-toggle" class="icon-btn" title="Toggle Light/Dark Theme">
+                        <!-- Sun/Moon SVG Icon -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                    
+                    {% if request.user.is_authenticated %}
+                        <div class="user-badge">
+                            <div class="user-avatar">
+                                {{ request.user.username|slice:":1"|upper }}
+                            </div>
+                            <div style="display:flex; flex-direction:column; line-height:1.2;">
+                                <span style="font-weight:600; color:var(--text-primary);">{{ request.user.username }}</span>
+                                <span style="font-size:0.75rem; color:var(--text-muted);">{{ request.employee.role|default:"User" }}</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'logout' %}" class="icon-btn" title="Logout" style="margin-left: 8px;">
+                            <!-- Log Out SVG Icon -->
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        </a>
+                    {% endif %}
+                </div>
+            </header>
+
+            <main class="content-frame">
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="{% static 'employees/js/main.js' %}"></script>
+</body>
+</html>

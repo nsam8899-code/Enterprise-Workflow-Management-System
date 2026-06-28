@@ -1,68 +1,110 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Employees</title>
-</head>
-<body>
-    <h1>Employees</h1>
-    <p><a href="{% url 'employee_create' %}">+ New Employee</a></p>
-    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
-    
-    <form method="get">
-        <input type="text" name="search" value="{{ search_query }}" placeholder="Search name or ID...">
-        <select name="department">
-            <option value="">All Departments</option>
-            {% for dept in departments %}
-                <option value="{{ dept.id }}" {% if dept_filter == dept.id|stringformat:"s" %}selected{% endif %}>{{ dept.name }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Search/Filter</button>
-    </form>
+{% extends 'employees/base.html' %}
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th><a href="?sort=employee_id&desc={% if sort_by == 'employee_id' and desc_mode == 'false' %}true{% else %}false{% endif %}">Employee ID</a></th>
-                <th><a href="?sort=name&desc={% if sort_by == 'name' and desc_mode == 'false' %}true{% else %}false{% endif %}">Name</a></th>
-                <th>Department</th>
-                <th>Position</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for emp in page_obj %}
-            <tr>
-                <td>{{ emp.employee_id }}</td>
-                <td>{{ emp.name }}</td>
-                <td>{{ emp.department.name }}</td>
-                <td>{{ emp.position }}</td>
-                <td>{{ emp.role }}</td>
-                <td>{{ emp.status }}</td>
-                <td>
-                    <a href="{% url 'employee_edit' emp.pk %}">Edit</a> | 
-                    <a href="{% url 'employee_delete' emp.pk %}">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7">No employees found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block title %}Employee Directory | FlowCorp{% endblock %}
 
-    <div class="pagination">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
-        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+{% block content %}
+    <div class="flex-space mb-4">
+        <div>
+            <h1>Employee Directory</h1>
+            <p class="page-subtitle">Search, filter, and manage employee profiles across the organization.</p>
+        </div>
+        <div>
+            <a href="{% url 'employee_create' %}" class="btn btn-primary">+ New Employee</a>
+        </div>
+    </div>
+
+    <!-- Filters Card -->
+    <div class="card mb-4">
+        <form method="get" style="display: grid; grid-template-columns: 2fr 1fr 1fr 100px; gap: 16px; align-items: flex-end;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="search">Search</label>
+                <input type="text" id="search" name="search" value="{{ search_query }}" placeholder="Search by name or employee ID...">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="department">Department</label>
+                <select id="department" name="department">
+                    <option value="">All Departments</option>
+                    {% for dept in departments %}
+                        <option value="{{ dept.id }}" {% if dept_filter == dept.id|stringformat:"s" %}selected{% endif %}>{{ dept.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="">All Statuses</option>
+                    <option value="Active" {% if status_filter == 'Active' %}selected{% endif %}>Active</option>
+                    <option value="Inactive" {% if status_filter == 'Inactive' %}selected{% endif %}>Inactive</option>
+                    <option value="Resigned" {% if status_filter == 'Resigned' %}selected{% endif %}>Resigned</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-secondary" style="width: 100%; justify-content: center; height: 42px;">Filter</button>
+        </form>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <a href="?sort=employee_id&desc={% if sort_by == 'employee_id' and desc_mode == 'false' %}true{% else %}false{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">
+                            Employee ID 
+                            {% if sort_by == 'employee_id' %}{% if desc_mode == 'true' %}▼{% else %}▲{% endif %}{% endif %}
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?sort=name&desc={% if sort_by == 'name' and desc_mode == 'false' %}true{% else %}false{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">
+                            Name 
+                            {% if sort_by == 'name' %}{% if desc_mode == 'true' %}▼{% else %}▲{% endif %}{% endif %}
+                        </a>
+                    </th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in page_obj %}
+                <tr>
+                    <td><strong>{{ emp.employee_id }}</strong></td>
+                    <td>{{ emp.name }}</td>
+                    <td>{{ emp.department.name }}</td>
+                    <td>{{ emp.position }}</td>
+                    <td><span class="badge badge-role">{{ emp.role }}</span></td>
+                    <td>
+                        <span class="badge {% if emp.status == 'Active' %}badge-success{% else %}badge-danger{% endif %}">
+                            {{ emp.status }}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <a href="{% url 'employee_edit' emp.pk %}" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; border-color: var(--border);">Edit</a>
+                        <a href="{% url 'employee_delete' emp.pk %}" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem; background-color: var(--error);">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; color: var(--text-secondary); padding: 40px;">No employees found matching the criteria.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        {% if page_obj.paginator.num_pages > 1 %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if desc_mode %}&desc={{ desc_mode }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">&laquo; First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if desc_mode %}&desc={{ desc_mode }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Previous</a>
+                {% endif %}
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if desc_mode %}&desc={{ desc_mode }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if desc_mode %}&desc={{ desc_mode }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Last &raquo;</a>
+                {% endif %}
+            </div>
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}

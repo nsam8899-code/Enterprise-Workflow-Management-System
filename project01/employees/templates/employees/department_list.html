@@ -1,34 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Departments</title>
-</head>
-<body>
-    <h1>Departments</h1>
-    <p><a href="{% url 'department_create' %}">+ New Department</a></p>
-    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for dept in departments %}
-            <tr>
-                <td>{{ dept.name }}</td>
-                <td>
-                    <a href="{% url 'department_edit' dept.pk %}">Edit</a> | 
-                    <a href="{% url 'department_delete' dept.pk %}">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="2">No departments found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+{% extends 'employees/base.html' %}
+
+{% block title %}Departments | FlowCorp{% endblock %}
+
+{% block content %}
+    <div class="flex-space mb-4">
+        <div>
+            <h1>Department Management</h1>
+            <p class="page-subtitle">Add and configure business units across the organization.</p>
+        </div>
+        <div>
+            <a href="{% url 'department_create' %}" class="btn btn-primary">+ New Department</a>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card" style="max-width: 800px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Department Name</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dept in departments %}
+                <tr>
+                    <td><strong>{{ dept.name }}</strong></td>
+                    <td style="text-align: right;">
+                        <a href="{% url 'department_edit' dept.pk %}" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; border-color: var(--border);">Edit</a>
+                        <a href="{% url 'department_delete' dept.pk %}" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem; background-color: var(--error);">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" style="text-align: center; color: var(--text-secondary); padding: 40px;">No departments found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

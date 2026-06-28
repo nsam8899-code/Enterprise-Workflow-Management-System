@@ -1,17 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | FlowCorp</title>
+    <link rel="stylesheet" href="{% static 'employees/css/style.css' %}">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
 </head>
 <body>
-    <h1>Login</h1>
-    {% if form.errors %}
-        <p style="color: red;">Invalid username or password.</p>
-    {% endif %}
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo"></div>
+                <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 4px;">Welcome Back</h1>
+                <p style="color: var(--text-secondary); font-size: 0.875rem;">Login to your FlowCorp account</p>
+            </div>
+
+            {% if form.errors %}
+                <div class="alert alert-danger" style="padding: 12px; font-size: 0.85rem;">
+                    Invalid username or password. Please try again.
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    <input type="text" name="username" autofocus required id="id_username" placeholder="Enter your username">
+                </div>
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label for="id_password">Password</label>
+                    <input type="password" name="password" required id="id_password" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px;">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'employees/js/main.js' %}"></script>
 </body>
 </html>

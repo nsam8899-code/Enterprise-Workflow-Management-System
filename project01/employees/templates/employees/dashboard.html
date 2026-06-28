@@ -1,19 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Dashboard</h1>
-    {% if employee %}
-        <p>Welcome, {{ employee.name }} (Role: {{ employee.role }})</p>
-        {% if employee.role == 'Super User' or employee.role == 'Admin' %}
-            <p><a href="{% url 'employee_list' %}">Employee Directory</a></p>
-            <p><a href="{% url 'department_list' %}">Department Management</a></p>
-        {% endif %}
-    {% else %}
-        <p>Welcome! (No employee profile loaded)</p>
-    {% endif %}
-    <p><a href="{% url 'logout' %}">Logout</a></p>
-</body>
-</html>
+{% extends 'employees/base.html' %}
+
+{% block title %}Dashboard | FlowCorp{% endblock %}
+
+{% block content %}
+    <div class="flex-space mb-4">
+        <div>
+            <h1>Dashboard</h1>
+            <p class="page-subtitle">Welcome back to the Enterprise Workflow Hub.</p>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Profile Card -->
+        <div class="card">
+            <h3 class="mb-4" style="border-bottom: 1px solid var(--border); padding-bottom: 10px;">My Employee Profile</h3>
+            {% if employee %}
+                <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem; margin-top: 16px;">
+                    <div><strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Employee ID:</strong> {{ employee.employee_id }}</div>
+                    <div><strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Name:</strong> {{ employee.name }}</div>
+                    <div><strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Title Position:</strong> {{ employee.position }}</div>
+                    <div><strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Department:</strong> {{ employee.department.name }}</div>
+                    <div><strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Role:</strong> {{ employee.role }}</div>
+                    <div><strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Hire Date:</strong> {{ employee.hire_date }}</div>
+                    <div>
+                        <strong style="color: var(--text-secondary); display: inline-block; width: 140px;">Status:</strong> 
+                        <span class="badge badge-success">{{ employee.status }}</span>
+                    </div>
+                </div>
+            {% else %}
+                <p style="color: var(--error);">No employee profile is currently associated with your account.</p>
+            {% endif %}
+        </div>
+
+        <!-- Quick Stats / Actions -->
+        <div class="card">
+            <h3 class="mb-4" style="border-bottom: 1px solid var(--border); padding-bottom: 10px;">System Overview</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    You are logged in with the role of <strong>{{ employee.role }}</strong>.
+                </p>
+                {% if employee.role == 'Super User' or employee.role == 'Admin' %}
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <a href="{% url 'employee_list' %}" class="btn btn-primary" style="justify-content: center;">Go to Employee Directory</a>
+                        <a href="{% url 'department_list' %}" class="btn btn-secondary" style="justify-content: center;">Manage Departments</a>
+                    </div>
+                {% else %}
+                    <div style="padding: 12px; border-radius: 6px; font-size: 0.85rem; border: 1px solid var(--border); background-color: var(--bg-primary);">
+                        You have standard employee permissions. Approval workflows and Leave requests will be available in the upcoming phases.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

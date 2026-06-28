@@ -1,15 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Delete Employee</title>
-</head>
-<body>
-    <h1>Delete Employee</h1>
-    <p>Are you sure you want to delete the employee "{{ employee.name }}" ({{ employee.employee_id }})?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-    </form>
-    <p><a href="{% url 'employee_list' %}">Cancel</a></p>
-</body>
-</html>
+{% extends 'employees/base.html' %}
+
+{% block title %}Delete Employee | FlowCorp{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <h1>Delete Employee</h1>
+        <p class="page-subtitle">Confirm removal of the employee profile from the system database.</p>
+    </div>
+
+    <div class="card" style="max-width: 500px;">
+        <h3 class="mb-4" style="color: var(--error);">Warning</h3>
+        <p style="margin-bottom: 20px; color: var(--text-secondary);">
+            Are you sure you want to permanently delete the employee profile for <strong>{{ employee.name }}</strong> (ID: <code>{{ employee.employee_id }}</code>)?
+        </p>
+        <p style="margin-bottom: 24px; font-size: 0.85rem; color: var(--text-muted);">
+            Deleting this employee profile will delete their profile data. The associated Django user account will remain intact.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; gap: 12px;">
+                <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                <a href="{% url 'employee_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
