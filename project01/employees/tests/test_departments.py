@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import date
-from employees.models import Department, Employee
+from employees.models import Department, Employee, MenuPermission
 
 class DepartmentCRUDTestCase(TestCase):
     def setUp(self):
@@ -21,6 +21,16 @@ class DepartmentCRUDTestCase(TestCase):
         self.emp_emp = Employee.objects.create(
             name="Employee User", hire_date=date.today(), status="Active",
             position="Staff", department=self.dept_it, role="Employee", user=self.emp_user
+        )
+
+        # Create default MenuPermissions for testing
+        MenuPermission.objects.create(
+            menu_name='departments',
+            display_name='Department Management',
+            allow_superuser=True,
+            allow_admin=True,
+            allow_manager=False,
+            allow_employee=False
         )
 
     def test_admin_can_access_department_list(self):

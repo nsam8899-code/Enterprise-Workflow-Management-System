@@ -38,13 +38,15 @@
                         <span class="label-text">Dashboard</span>
                     </a>
                 </li>
-                {% if request.employee.role == 'Super User' or request.employee.role == 'Admin' %}
+                {% if 'employees' in request.allowed_menus %}
                     <li class="{% if 'employee' in request.resolver_match.view_name %}active{% endif %}">
                         <a href="{% url 'employee_list' %}">
                             <span class="icon">👥</span>
                             <span class="label-text">Employees</span>
                         </a>
                     </li>
+                {% endif %}
+                {% if 'departments' in request.allowed_menus %}
                     <li class="{% if 'department' in request.resolver_match.view_name %}active{% endif %}">
                         <a href="{% url 'department_list' %}">
                             <span class="icon">🏢</span>

@@ -29,6 +29,13 @@ class EmployeeProfileMiddleware:
                     return redirect('login')
                 # Attach employee profile to request object
                 request.employee = employee
+                
+                # Fetch allowed menu list dynamically
+                role = employee.role
+                from employees.models import MenuPermission
+                request.allowed_menus = [
+                    p.menu_name for p in MenuPermission.objects.all() if p.is_allowed(role)
+                ]
             except AttributeError:
                 # No employee profile found for user
                 return redirect('/access-denied/')

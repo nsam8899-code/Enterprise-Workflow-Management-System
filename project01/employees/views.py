@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db import models
 from django.core.paginator import Paginator
-from employees.decorators import superuser_or_admin_required
+from employees.decorators import menu_permission_required
 from employees.models import Department, Employee
 from employees.forms import DepartmentForm, EmployeeForm
 
@@ -21,13 +21,13 @@ def dashboard(request):
     return render(request, 'employees/dashboard.html', {'employee': employee})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('departments')
 def department_list(request):
     departments = Department.objects.all().order_by('name')
     return render(request, 'employees/department_list.html', {'departments': departments})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('departments')
 def department_create(request):
     if request.method == 'POST':
         form = DepartmentForm(request.POST)
@@ -39,7 +39,7 @@ def department_create(request):
     return render(request, 'employees/department_form.html', {'form': form, 'title': 'Create Department'})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('departments')
 def department_edit(request, pk):
     department = get_object_or_404(Department, pk=pk)
     if request.method == 'POST':
@@ -52,7 +52,7 @@ def department_edit(request, pk):
     return render(request, 'employees/department_form.html', {'form': form, 'title': 'Edit Department'})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('departments')
 def department_delete(request, pk):
     department = get_object_or_404(Department, pk=pk)
     if request.method == 'POST':
@@ -61,7 +61,7 @@ def department_delete(request, pk):
     return render(request, 'employees/department_confirm_delete.html', {'department': department})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('employees')
 def employee_list(request):
     queryset = Employee.objects.all().select_related('department', 'user')
     
@@ -114,7 +114,7 @@ def employee_list(request):
     })
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('employees')
 def employee_create(request):
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
@@ -126,7 +126,7 @@ def employee_create(request):
     return render(request, 'employees/employee_form.html', {'form': form, 'title': 'Create Employee'})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('employees')
 def employee_edit(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == 'POST':
@@ -139,7 +139,7 @@ def employee_edit(request, pk):
     return render(request, 'employees/employee_form.html', {'form': form, 'title': 'Edit Employee'})
 
 @login_required
-@superuser_or_admin_required
+@menu_permission_required('employees')
 def employee_delete(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == 'POST':

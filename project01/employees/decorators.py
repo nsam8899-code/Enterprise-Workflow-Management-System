@@ -9,3 +9,14 @@ def superuser_or_admin_required(view_func):
             return view_func(request, *args, **kwargs)
         raise PermissionDenied
     return _wrapped_view_func
+
+def menu_permission_required(menu_name):
+    def decorator(view_func):
+        def _wrapped_view_func(request, *args, **kwargs):
+            if not request.user.is_authenticated:
+                return redirect('login')
+            if hasattr(request, 'allowed_menus') and menu_name in request.allowed_menus:
+                return view_func(request, *args, **kwargs)
+            raise PermissionDenied
+        return _wrapped_view_func
+    return decorator

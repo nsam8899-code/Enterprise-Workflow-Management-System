@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import date
-from employees.models import Department, Employee
+from employees.models import Department, Employee, MenuPermission
 
 class MiddlewareTestCase(TestCase):
     def setUp(self):
@@ -30,6 +30,24 @@ class MiddlewareTestCase(TestCase):
             department=self.dept,
             role="Employee",
             user=self.user_inactive_profile
+        )
+
+        # Create default MenuPermissions for testing
+        MenuPermission.objects.create(
+            menu_name='employees',
+            display_name='Employee Directory',
+            allow_superuser=True,
+            allow_admin=True,
+            allow_manager=False,
+            allow_employee=False
+        )
+        MenuPermission.objects.create(
+            menu_name='departments',
+            display_name='Department Management',
+            allow_superuser=True,
+            allow_admin=True,
+            allow_manager=False,
+            allow_employee=False
         )
 
     def test_active_user_with_profile_allowed(self):
@@ -66,3 +84,17 @@ class MiddlewareTestCase(TestCase):
         response = self.client.post('/login/', {'username': 'test_login_redirect', 'password': 'password'})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/')
+
+    def test_dynamic_permission_enforcement(self):
+        # Initially Employee cannot access departments
+        self.client.login(username="profile_user", password="password")
+        response = self.client.get(reverse('department_list'))
+        self.assertEqual(response.status_code, 403)
+
+        # Update permission to allow Employees
+        perm = MenuPermission.objects.get(menu_name='departments')
+        perm.allow_employee = True
+        perm.save()
+
+        response = self.client.get(reverse('department_list'))
+        self.assertEqual(response.status_code, 200) # Now allowed
