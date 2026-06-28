@@ -7,6 +7,7 @@ class EmployeeProfileMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        request.allowed_menus = []
         exempt_urls = [
             reverse('login'),
             '/access-denied/',
