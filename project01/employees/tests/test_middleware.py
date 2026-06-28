@@ -55,3 +55,14 @@ class MiddlewareTestCase(TestCase):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
         self.assertIn('/login/', response.url)
+
+    def test_login_redirects_to_dashboard(self):
+        user = User.objects.create_user(username="test_login_redirect", password="password")
+        dept = Department.objects.create(name="IT_Test")
+        Employee.objects.create(
+            name="Test User", hire_date=date.today(), status="Active",
+            position="Dev", department=dept, role="Employee", user=user
+        )
+        response = self.client.post('/login/', {'username': 'test_login_redirect', 'password': 'password'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
