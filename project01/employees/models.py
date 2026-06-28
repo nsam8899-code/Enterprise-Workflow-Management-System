@@ -47,3 +47,26 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.employee_id} - {self.name}"
+
+
+class MenuPermission(models.Model):
+    menu_name = models.CharField(max_length=50, unique=True)
+    display_name = models.CharField(max_length=100)
+    allow_superuser = models.BooleanField(default=True)
+    allow_admin = models.BooleanField(default=True)
+    allow_manager = models.BooleanField(default=False)
+    allow_employee = models.BooleanField(default=False)
+
+    def is_allowed(self, role):
+        if role == 'Super User':
+            return self.allow_superuser
+        elif role == 'Admin':
+            return self.allow_admin
+        elif role == 'Manager':
+            return self.allow_manager
+        elif role == 'Employee':
+            return self.allow_employee
+        return False
+
+    def __str__(self):
+        return self.display_name

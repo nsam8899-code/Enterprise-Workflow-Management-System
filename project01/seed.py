@@ -6,7 +6,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project01.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from employees.models import Department, Employee
+from employees.models import Department, Employee, MenuPermission
 
 # Create admin user
 if not User.objects.filter(username='admin').exists():
@@ -39,3 +39,15 @@ if not Employee.objects.filter(user=u).exists():
     print("Seeded Employee profile for admin")
 else:
     print("Employee profile for admin already exists")
+
+# Seed Menu Permissions
+MenuPermission.objects.get_or_create(
+    menu_name='employees',
+    defaults={'display_name': 'Employee Directory', 'allow_superuser': True, 'allow_admin': True}
+)
+MenuPermission.objects.get_or_create(
+    menu_name='departments',
+    defaults={'display_name': 'Department Management', 'allow_superuser': True, 'allow_admin': True}
+)
+print("Menu permissions seeded")
+
